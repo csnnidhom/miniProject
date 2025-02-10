@@ -1,0 +1,234 @@
+// Kelas ini merepresentasikan produk dengan nama dan harga
+class Product {
+    String name;
+    double price;
+
+    // Konstruktor untuk membuat objek Product baru
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // Method toString untuk mengembalikan representasi string dari objek Product
+    @Override
+    public String toString() {
+        return "Nama: " + name + ", Harga: " + price;
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class LoginProcessor {
+
+    // Method untuk menangani proses login
+    public void login() {
+        String correctUsername = "admin"; // Username yang benar
+        String correctPassword = "password"; // Password yang benar
+        int allowedAttempts = 3; // Jumlah percobaan login yang diizinkan
+
+        // Memanggil method processLogin untuk melakukan verifikasi login
+        boolean success = processLogin(correctUsername, correctPassword, allowedAttempts);
+
+        // Jika login berhasil
+        if (success) {
+            System.out.println("Selamat datang!");
+
+            // Membuat ArrayList untuk menyimpan data produk
+            ArrayList<Product> productList = new ArrayList<>();
+
+            // Memanggil method showCRUDMenu untuk menampilkan menu CRUD produk
+            showCRUDMenu(productList);
+        }
+    }
+
+    // Method untuk melakukan verifikasi login
+    private boolean processLogin(String username, String password, int maxAttempts) {
+        Scanner input = new Scanner(System.in);
+        int attempts = 0;
+
+        // Loop selama jumlah percobaan masih ada
+        while (attempts < maxAttempts) {
+            System.out.print("Masukkan username: ");
+            String inputUsername = input.nextLine();
+
+            System.out.print("Masukkan password: ");
+            String inputPassword = input.nextLine();
+
+            // Jika username dan password cocok
+            if (inputUsername.equals(username) && inputPassword.equals(password)) {
+                input.close();
+                return true; // Login berhasil
+            } else {
+                attempts++; // Tambah jumlah percobaan
+                System.out.println("Username atau password salah. Sisa percobaan: " + (maxAttempts - attempts));
+            }
+        }
+
+        System.out.println("Anda telah gagal login 3 kali. Akun Anda diblokir.");
+        input.close();
+        return false; // Login gagal
+    }
+
+    // Method untuk menampilkan menu CRUD produk
+    private void showCRUDMenu(ArrayList<Product> productList) {
+        Scanner input = new Scanner(System.in);
+        int choice;
+
+        // Loop selama user tidak memilih keluar
+        do {
+            System.out.println("\nMenu CRUD Produk:");
+            System.out.println("1. Tambah Produk");
+            System.out.println("2. Lihat Daftar Produk");
+            System.out.println("3. Update Produk");
+            System.out.println("4. Hapus Produk");
+            System.out.println("5. Keluar");
+            System.out.print("Masukkan pilihan: ");
+
+            // Validasi input, memastikan input adalah angka
+            while (!input.hasNextInt()) {
+                System.out.println("Input tidak valid. Masukkan angka.");
+                input.next(); // Membuang input yang salah
+            }
+            choice = input.nextInt();
+            input.nextLine(); // Membersihkan buffer input
+
+            // Switch case untuk menangani pilihan menu
+            switch (choice) {
+                case 1:
+                    addProduct(productList, input);
+                    break;
+                case 2:
+                    viewProducts(productList);
+                    break;
+                case 3:
+                    updateProduct(productList, input);
+                    break;
+                case 4:
+                    deleteProduct(productList, input);
+                    break;
+                case 5:
+                    System.out.println("Terima kasih!");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+            }
+        } while (choice != 5);
+
+        input.close();
+    }
+
+    // Method untuk menambahkan produk baru
+    private void addProduct(ArrayList<Product> productList, Scanner input) {
+        System.out.print("Masukkan nama produk: ");
+        String name = input.nextLine();
+
+        double price = -1; // Inisialisasi dengan nilai invalid
+        // Loop untuk memastikan harga yang dimasukkan valid
+        while (price < 0) {
+            System.out.print("Masukkan harga produk: ");
+            if (input.hasNextDouble()) {
+                price = input.nextDouble();
+                if (price < 0) {
+                    System.out.println("Harga tidak boleh negatif.");
+                }
+            } else {
+                System.out.println("Input tidak valid. Masukkan angka.");
+                input.next(); // Membuang input yang salah
+            }
+        }
+        input.nextLine(); // Membersihkan buffer input
+
+        // Membuat objek Product baru dan menambahkannya ke ArrayList
+        Product newProduct = new Product(name, price);
+        productList.add(newProduct);
+        System.out.println("Produk berhasil ditambahkan.");
+    }
+
+    // Method untuk menampilkan daftar produk
+    private void viewProducts(ArrayList<Product> productList) {
+        // Jika daftar produk kosong
+        if (productList.isEmpty()) {
+            System.out.println("Belum ada produk yang ditambahkan.");
+        } else {
+            System.out.println("\nDaftar Produk:");
+            // Loop untuk menampilkan setiap produk
+            for (int i = 0; i < productList.size(); i++) {
+                System.out.println((i + 1) + ". " + productList.get(i));
+            }
+        }
+    }
+
+    // Method untuk mengupdate data produk
+    private void updateProduct(ArrayList<Product> productList, Scanner input) {
+        viewProducts(productList); // Menampilkan daftar produk terlebih dahulu
+
+        // Jika daftar produk tidak kosong
+        if (!productList.isEmpty()) {
+            System.out.print("Masukkan nomor produk yang ingin diupdate: ");
+            // Validasi input, memastikan input adalah angka
+            while (!input.hasNextInt()) {
+                System.out.println("Input tidak valid. Masukkan angka.");
+                input.next(); // Membuang input yang salah
+            }
+            int index = input.nextInt();
+            input.nextLine(); // Membersihkan buffer input
+
+            // Jika nomor produk valid
+            if (index >= 1 && index <= productList.size()) {
+                System.out.print("Masukkan nama produk baru: ");
+                String name = input.nextLine();
+
+                double price = -1;
+                while (price < 0) {
+                    System.out.print("Masukkan harga produk baru: ");
+                    if (input.hasNextDouble()) {
+                        price = input.nextDouble();
+                        if (price < 0) {
+                            System.out.println("Harga tidak boleh negatif.");
+                        }
+                    } else {
+                        System.out.println("Input tidak valid. Masukkan angka.");
+                        input.next(); // Membuang input yang salah
+                    }
+                }
+                input.nextLine(); // Membersihkan buffer input
+
+                // Membuat objek Product baru dengan data yang diupdate
+                Product updatedProduct = new Product(name, price);
+                // Mengupdate data produk di ArrayList
+                productList.set(index - 1, updatedProduct);
+                System.out.println("Produk berhasil diupdate.");
+            } else {
+                System.out.println("Nomor produk tidak valid.");
+            }
+        }
+    }
+
+    // Method untuk menghapus data produk
+    private void deleteProduct(ArrayList<Product> productList, Scanner input) {
+        viewProducts(productList); // Menampilkan daftar produk terlebih dahulu
+
+        // Jika daftar produk tidak kosong
+        if (!productList.isEmpty()) {
+            System.out.print("Masukkan nomor produk yang ingin dihapus: ");
+            // Validasi input, memastikan input adalah angka
+            while (!input.hasNextInt()) {
+                System.out.println("Input tidak valid. Masukkan angka.");
+                input.next(); // Membuang input yang salah
+            }
+            int index = input.nextInt();
+            input.nextLine(); // Membersihkan buffer input
+
+            // Jika nomor produk valid
+            if (index >= 1 && index <= productList.size()) {
+                // Menghapus data produk dari ArrayList
+                productList.remove(index - 1);
+                System.out.println("Produk berhasil dihapus.");
+            } else {
+                System.out.println("Nomor produk tidak valid.");
+            }
+        }
+    }
+}
