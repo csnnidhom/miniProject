@@ -5,7 +5,7 @@ import com.juaracoding.model.Product;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Search {
+public class SearchProduct {
 
     public static void menuSearch(ArrayList<Product> listProduct, Scanner input){
         int choice;

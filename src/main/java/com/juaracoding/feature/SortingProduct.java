@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class Sorting {
+public class SortingProduct {
 
     public static void sortingData(ArrayList<Product> listProduct) {
         ViewProduct.view(listProduct);

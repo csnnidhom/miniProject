@@ -47,10 +47,10 @@ public class MenuProduct {
                     DeleteProduct.delete(listProduct, input);
                     break;
                 case 5:
-                    Search.menuSearch(listProduct, input);
+                    SearchProduct.menuSearch(listProduct, input);
                     break;
                 case 6:
-                    Sorting.sortingData(listProduct);
+                    SortingProduct.sortingData(listProduct);
                 case 0:
                     System.out.println("Successfully signed out");
                     Login.prosesLogin();
