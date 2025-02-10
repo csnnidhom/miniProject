@@ -24,6 +24,8 @@ public class DeleteProduct {
             if ((index >= 1 && index <= listProduct.size())){
                 listProduct.remove(index-1);
                 System.out.println("product deleted");
+
+                SequencingNumber.sequence(listProduct);
             }else {
                 System.out.println("product not found");
             }

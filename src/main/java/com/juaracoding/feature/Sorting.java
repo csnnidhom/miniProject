@@ -53,27 +53,35 @@ public class Sorting {
             switch (option){
                 case 1:
                     Collections.sort(listProduct, Comparator.comparing(Product::getNameProduct));
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 2:
                     Collections.sort(listProduct, Comparator.comparing(Product::getNameProduct).reversed());
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 3:
                     Collections.sort(listProduct, Comparator.comparing(Product::getCategory));
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 4:
                     Collections.sort(listProduct, Comparator.comparing(Product::getCategory).reversed());
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 5:
                     Collections.sort(listProduct, Comparator.comparingDouble(Product::getPrice));
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 6:
                     Collections.sort(listProduct, Comparator.comparingDouble(Product::getPrice).reversed());
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 7:
                     Collections.sort(listProduct, Comparator.comparingInt(Product::getStock));
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 8:
                     Collections.sort(listProduct, Comparator.comparingInt(Product::getStock).reversed());
+                    SequencingNumber.sequence(listProduct);
                     break;
                 case 9:
                     MenuProduct.showMenu(listProduct);

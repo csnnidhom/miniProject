@@ -1,27 +1,35 @@
 package com.juaracoding.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Product {
     public String nameProduct;
     public String category;
     public double price;
     int stock;
+    public int displayedNumber;
 
-    int number = 0;
+    private static AtomicInteger nextNumber = new AtomicInteger(1);
 
     public Product(String nameProduct, String category,double price,  int stock) {
         this.nameProduct = nameProduct;
         this.category = category;
         this.price = price;
         this.stock = stock;
+        this.displayedNumber = nextNumber.getAndIncrement();
     }
 
     @Override
     public String toString() {
-        return number++ +
+        return displayedNumber +
                 ". Name \t: " + nameProduct +
                 "\n   Category : " + category +
                 "\n   Price \t: " + price +
                 "\n   Stock \t: " + stock ;
+    }
+
+    public int getDisplayedNumber() {
+        return displayedNumber;
     }
 
     public String getNameProduct() {
@@ -40,7 +48,4 @@ public class Product {
         return stock;
     }
 
-    public int getNumber() {
-        return number;
-    }
 }
