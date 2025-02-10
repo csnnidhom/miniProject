@@ -54,16 +54,21 @@ public class Validation {
 
     public static int valStock(Scanner input){
         int stock=-1;
+        String inputStr;
         while (stock < 0){
             System.out.print("Stock: ");
-            if (input.hasNextInt()) {
-                stock = input.nextInt();
-                if (stock < 0){
+            inputStr = input.nextLine();
+            if (inputStr.isBlank()) {
                     System.out.println("The Stock cannot be empty");
-                }
             }else {
-                System.out.println("The Stock not valid");
-                input.next();
+                try{
+                    stock = Integer.parseInt(inputStr);
+                    if (stock < 0){
+                        System.out.println("The price cannot be empty");
+                    }
+                }catch (NumberFormatException e){
+                    System.out.println("The Stock not valid");
+                }
             }
         }
         return stock;
