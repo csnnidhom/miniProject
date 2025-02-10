@@ -53,6 +53,7 @@ public class Search {
         for (Product product : listProduct){
             if (product.price >= valueMinPrice && product.price <= valueMaxPrice){
                 searchResults.add(product);
+                SequencingNumber.sequence(searchResults);
             }
         }
         showResult(searchResults);
@@ -66,6 +67,7 @@ public class Search {
         for (Product product : listProduct) {
             if (product.nameProduct.toLowerCase().contains(keywoard)) {
                 searchResults.add(product);
+                SequencingNumber.sequence(searchResults);
             }
         }
 
@@ -80,6 +82,7 @@ public class Search {
         for (Product product : listProduct) {
             if (product.category.toLowerCase().contains(keywoard)) {
                 searchResults.add(product);
+                SequencingNumber.sequence(searchResults);
             }
         }
 
